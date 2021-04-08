@@ -19,4 +19,4 @@ jobs:
       - name: Build the Docker image
         run: |
             docker run --rm --privileged multiarch/qemu-user-static:register --reset
-            docker build -t "${DOCKER_CONTAINER}:${{ github.sha }}" --platform ${DOCKER_ARCH} --pull .
+            docker build -t "${DOCKER_CONTAINER}:${{ github.sha }}" --platform ${DOCKER_ARCH} --pull -f Dockerfile.multiarch-aarch64 .
