@@ -1,6 +1,6 @@
-FROM quay.io/qiot/ubi-multiarch:v1.0.1
+FROM quay.io/qiotproject/ubi-multiarch:v1.0.3
 LABEL "architecture"="arm64"
 
-RUN dnf -y install java-11-openjdk maven && dnf clean all
+RUN dnf -y install java-11-openjdk java-11-openjdk-devel maven && dnf clean all
 ENV JAVA_HOME=/usr/lib/jvm/jre-11-openjdk
 CMD ["/bin/bash"]
