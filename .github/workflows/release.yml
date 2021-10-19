@@ -10,7 +10,7 @@ on:
 env:
   DOCKER_ARCH: aarch64
   DOCKER_CONTAINER: ubi-multiarch-maven
-  DOCKER_REPO: quay.io/qiot
+  DOCKER_REPO: quay.io/qiotproject
 
 jobs:
   create_and_publish_release:
