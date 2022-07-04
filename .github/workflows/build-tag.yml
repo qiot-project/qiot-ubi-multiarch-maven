@@ -27,7 +27,7 @@ jobs:
         run: |
             docker run --rm --privileged multiarch/qemu-user-static:register --reset
             docker build --build-arg BASE_MULTIARCH_VERSION=${BASE_MULTIARCH_VERSION} --build-arg ARCH=${ARCH} --build-arg JAVA_VERSION=11 -t "${DOCKER_CONTAINER}:${{ steps.get_version.outputs.VERSION }}-java11" --platform ${DOCKER_ARCH} --pull -f Dockerfile.multiarch-aarch64 .
-            docker tag $DOCKER_CONTAINER:$PROJECT_VERSION $DOCKER_CONTAINER:latest
+            docker tag $DOCKER_CONTAINER:$PROJECT_VERSION $DOCKER_CONTAINER:latest-java11
       - name: Push To Quay - Java 11
         id: push-to-quay
         uses: redhat-actions/push-to-registry@v2
@@ -42,7 +42,7 @@ jobs:
         run: |
             docker run --rm --privileged multiarch/qemu-user-static:register --reset
             docker build --build-arg BASE_MULTIARCH_VERSION=${BASE_MULTIARCH_VERSION} --build-arg ARCH=${ARCH} --build-arg JAVA_VERSION=17 -t "${DOCKER_CONTAINER}:${{ steps.get_version.outputs.VERSION }}-java17" --platform ${DOCKER_ARCH} --pull -f Dockerfile.multiarch-aarch64 .
-            docker tag $DOCKER_CONTAINER:$PROJECT_VERSION $DOCKER_CONTAINER:latest
+            docker tag $DOCKER_CONTAINER:$PROJECT_VERSION $DOCKER_CONTAINER:latest-java17
       - name: Push To Quay - Java 17
         id: push-to-quay
         uses: redhat-actions/push-to-registry@v2
