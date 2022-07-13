@@ -5,7 +5,7 @@ on:
 
   schedule:
     # * is a special character in YAML so you have to quote this string
-    - cron:  '0 2 * * *'
+    - cron:  '0 0 * * *'
   
   push:
     paths-ignore:
@@ -19,6 +19,9 @@ on:
 
 jobs:
   build:
+    strategy:
+      matrix:
+        java-version: [11, 17]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -41,6 +44,5 @@ jobs:
       - name: Build the Docker image
         run: |
             docker run --rm --privileged multiarch/qemu-user-static:register --reset
-            docker build --build-arg BASE_MULTIARCH_VERSION=${BASE_MULTIARCH_VERSION} --build-arg DOCKER_ARCH=${DOCKER_ARCH} --build-arg JAVA_VERSION=11 -t "${DOCKER_CONTAINER}:${PROJECT_VERSION}-java11" --platform ${DOCKER_ARCH} --pull -f Dockerfile.multiarch-aarch64 .
-            docker build --build-arg BASE_MULTIARCH_VERSION=${BASE_MULTIARCH_VERSION} --build-arg DOCKER_ARCH=${DOCKER_ARCH} --build-arg JAVA_VERSION=17 -t "${DOCKER_CONTAINER}:${PROJECT_VERSION}-java17" --platform ${DOCKER_ARCH} --pull -f Dockerfile.multiarch-aarch64 .
+            docker build --build-arg BASE_MULTIARCH_VERSION=${BASE_MULTIARCH_VERSION} --build-arg DOCKER_ARCH=${DOCKER_ARCH} --build-arg JAVA_VERSION=11 -t "${DOCKER_CONTAINER}:${PROJECT_VERSION}-java${{ matrix.java-version }}" --platform ${DOCKER_ARCH} --pull -f Dockerfile.multiarch-aarch64 .
             
